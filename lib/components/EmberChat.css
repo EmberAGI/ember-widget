@@ -1,0 +1,39 @@
+.emberChat {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  padding: 1em;
+  border-radius: 8px;
+  background-color: #fffadc;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
+  color: black;
+}
+
+.toggleButton {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
+}
+
+.emberChat__input {
+  display: flex;
+  gap: 1em;
+  width: 100%;
+}
+
+.emberChat__input .rce-container-input {
+  width: 80% !important;
+  min-width: 0 !important;
+}
+
+.emberChat__input .rce-container-input textarea {
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  height: 100%;
+}
