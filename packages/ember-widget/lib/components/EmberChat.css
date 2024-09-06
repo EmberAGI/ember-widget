@@ -1,7 +1,8 @@
 .emberChat {
-  position: absolute;
+  position: fixed;
   bottom: 2rem;
   right: 2rem;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,9 +16,10 @@
 }
 
 .toggleButton {
-  position: absolute;
+  position: fixed;
   bottom: 2rem;
   right: 2rem;
+  z-index: 9999;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
 }
 

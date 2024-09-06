@@ -16,6 +16,8 @@ const ChatEmberRespons = z.object({
 export const fetchEmberResponse = async (
   request: IEmberRequest
 ): Promise<IEmberResponse | ErrorConstructor | string> => {
+  console.log(`\n\n---\n\nrequest:`);
+  console.log(request);
   const response = await fetch(url + `chat`, {
     method: "POST",
     headers: {
