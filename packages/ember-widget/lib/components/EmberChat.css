@@ -21,6 +21,12 @@
   right: 2rem;
   z-index: 9999;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
+  background-color: #ff7224;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  .ember-icon {
+    color: #fdf063;
+  }
 }
 
 .emberChat__input {
@@ -38,4 +44,8 @@
   background-color: #f9f9f9;
   border: 1px solid #e0e0e0;
   height: 100%;
+}
+
+.rce-mbox-text:after {
+  content: none !important;
 }

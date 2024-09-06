@@ -3,9 +3,11 @@ import "./EmberChat.css";
 import { MessageList, MessageType } from "react-chat-elements";
 import { Input } from "react-chat-elements";
 import { Button } from "react-chat-elements";
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IEmberConfig, IEmberResponse } from "../models/ember.model";
 import { fetchEmberResponse } from "../hooks/useEmber";
+import Markdown from "react-markdown";
+import EmberSvg from "../assets/EmberIcon.svg";
 
 export const EmberChat = ({ config }: { config: IEmberConfig }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,14 +25,13 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
   const [error, setError] = useState<string | null>(null);
   const [signTxUrl, setSignTxUrl] = useState<string | null>(null);
 
-  const handleFetch = async () => {
+  const handleFetch = async (reqMsg: string) => {
     try {
       const response: IEmberResponse | string | ErrorConstructor =
         await fetchEmberResponse({
-          inputText,
+          inputText: reqMsg,
           secret: config.secret,
         });
-      setInputText("");
       if (response instanceof Error) {
         throw response;
       }
@@ -44,8 +45,8 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
             position: "left",
             type: "text",
             title: "Ember",
-            text: response.message,
-          } as MessageType,
+            text: <Markdown>{response.message}</Markdown>,
+          } as unknown as MessageType,
         ]);
       } else {
         throw new Error("Invalid response");
@@ -60,11 +61,19 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
 
   useEffect(() => {
     if (messages[messages.length - 1].position === "right") {
-      handleFetch();
+      handleFetch(inputText);
+      clearInput();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
+
+  const clearInput = () => {
+    if (inputRef?.current) {
+      inputRef.current.value = "";
+      setInputText("");
+    }
+  };
 
   const handleSend = async () => {
     setLoading(true);
@@ -73,6 +82,7 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
 
     setMessages([
       ...messages,
+
       {
         position: "right",
         type: "text",
@@ -83,15 +93,13 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
   };
 
   console.log(loading, error, signTxUrl);
+  const inputRef = useRef<HTMLTextAreaElement | null>();
 
   if (!isOpen) {
     return (
-      <Button
-        text={"Open Chat"}
-        onClick={() => setIsOpen(true)}
-        title="Open Chat"
-        className="toggleButton"
-      />
+      <button onClick={() => setIsOpen(true)} className="toggleButton p-2">
+        <img src={EmberSvg} alt="Ember" className="w-10 h-10 ember-icon" />
+      </button>
     );
   } else {
     return (
@@ -124,19 +132,28 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
           lockable={true}
           toBottomHeight={"100%"}
           dataSource={messages}
-        />
+        ></MessageList>
 
         <div className="emberChat__input">
           <Input
+            referance={inputRef}
+            onChange={(e: { target: { value: string } }) =>
+              setInputText(e.target.value)
+            }
+            className="flex-grow"
             placeholder="Type here..."
             multiline={true}
             maxHeight={200}
-            onChange={(e: { target: { value: SetStateAction<string> } }) =>
-              setInputText(e.target.value)
-            }
             value={inputText}
+            rightButtons={[
+              <Button text={"Send"} onClick={handleSend} title="Send" />,
+            ]}
+            onKeyUp={(e: { key: string }) => {
+              if (e.key === "Enter") {
+                handleSend();
+              }
+            }}
           />
-          <Button text={"Send"} onClick={handleSend} title="Send" />
         </div>
       </div>
     );
