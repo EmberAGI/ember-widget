@@ -14,10 +14,12 @@ const ChatEmberRespons = z.object({
 });
 
 export const fetchEmberResponse = async (
-  request: IEmberRequest
+  request: IEmberRequest,
+  eventEmitter: EventTarget
 ): Promise<IEmberResponse | ErrorConstructor | string> => {
   console.log(`\n\n---\n\nrequest:`);
   console.log(request);
+
   const response = await fetch(url + `chat`, {
     method: "POST",
     headers: {
@@ -58,11 +60,22 @@ export const fetchEmberResponse = async (
       throw new Error("Invalid response");
     }
     const response = data.data as IEmberResponse;
+    let customEvent = new Event("none");
 
+    if (event === "activity") {
+      customEvent = new CustomEvent("activity", {
+        detail: {
+          message: response.message,
+          sign_tx_url: response.sign_tx_url,
+        },
+      });
+    }
     switch (event) {
       case "done":
+        reader.cancel();
         return response;
       case "activity":
+        eventEmitter.dispatchEvent(customEvent);
         continue;
       case "error":
         return `Error: ${response.message}`;
