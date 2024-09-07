@@ -33,11 +33,13 @@
   display: flex;
   gap: 1em;
   width: 100%;
+  background-color: transparent;
 }
 
 .emberChat__input .rce-container-input {
   width: 80% !important;
   min-width: 0 !important;
+  background-color: transparent;
 }
 
 .emberChat__input .rce-container-input textarea {
@@ -48,4 +50,17 @@
 
 .rce-mbox-text:after {
   content: none !important;
+}
+
+button.rce-button {
+  background-color: #ff7224 !important;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5em 1em;
+}
+
+.rce-input-buttons {
+  height: 100% !important;
+  align-items: center;
 }
