@@ -8,9 +8,13 @@
   "scripts": {
     "build": "pnpm run -r build",
     "test": "pnpm run -r test",
-    "dev": "pnpm run --filter ./apps/demo dev"
+    "dev": "pnpm run --filter ./apps/demo dev",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "pnpm build && changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.8",
     "typescript": "5.4.2"
   }
 }

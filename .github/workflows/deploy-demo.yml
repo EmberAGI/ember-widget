@@ -1,0 +1,78 @@
+name: Deploy demo app to demo.emberai.xyz (Production)
+
+on:
+  push:
+    branches:
+      - staging
+  workflow_dispatch:
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  deploy:
+    name: Deploy
+    needs: ci
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Create Release Pull Request
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          cwd: ./apps/demo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check for Changesets
+        id: check_changesets
+        run: |
+          if [[ "${{ steps.changesets.outputs.hasChangesets }}" == "false" ]]; then
+            echo "No changesets found. Proceeding with deployment."
+            echo "DEPLOY=true" >> $GITHUB_OUTPUT
+          else
+            echo "Changesets found. Skipping deployment."
+            echo "DEPLOY=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get New Version
+        if: steps.check_changesets.outputs.DEPLOY == 'true'
+        id: get_version
+        run: echo "NEW_VERSION=$(node -p "require('./apps/demo/package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: DOCKER STUFF...
+        if: steps.check_changesets.outputs.DEPLOY == 'true'
+        run: |
+          echo "DOCKER STUFF..."
+
+
+      - name: Check Deployment Status
+        if: steps.check_changesets.outputs.DEPLOY == 'true' && failure()
+        run: |
+          echo "Deployment failed. Please check the logs for more information."
+          exit 1
+
+      - name: Deployment Skipped
+        if: steps.check_changesets.outputs.DEPLOY == 'false'
+        run: |
+          echo "Deployment skipped because changesets were found."
+          echo "Please merge the version PR before running this workflow again."
