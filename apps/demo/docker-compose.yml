@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  demo-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: your-registry/demo-app:${VERSION}
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production
