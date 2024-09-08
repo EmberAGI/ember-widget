@@ -2,7 +2,9 @@ services:
   ember_widget_demo:
     container_name: ember-widget-demo-${ENVIRONMENT}
     restart: always
-    build: .
+    build:
+      context: ../..
+      dockerfile: apps/demo/Dockerfile
     secrets:
       - ember_api_key
     logging:

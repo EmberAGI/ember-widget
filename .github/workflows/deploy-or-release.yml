@@ -87,13 +87,16 @@ jobs:
           VITE_EMBER_API_KEY: ${{ secrets.EMBER_API_KEY }}
           ENVIRONMENT: production
         run: |
-          cd apps/demo
-          docker compose -f docker-compose.yml -p ember-widget-demo-$ENVIRONMENT up -d --build --remove-orphans
+          set -e
+          echo "Starting deployment process..."
+          docker compose -f apps/demo/docker-compose.yml -p ember-widget-demo-$ENVIRONMENT up -d --build --remove-orphans
+          echo "Deployment process completed successfully."
 
       - name: Check Deployment Status
         if: steps.check_changesets.outputs.DEPLOY == 'true' && failure()
         run: |
           echo "Deployment failed. Please check the logs for more information."
+          docker compose -f apps/demo/docker-compose.yml -p ember-widget-demo-$ENVIRONMENT logs
           exit 1
 
       - name: Deployment Skipped
