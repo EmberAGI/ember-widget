@@ -17,7 +17,7 @@ RUN apk update && apk add --no-cache bash envsubst
 RUN pwd
 RUN ls -la
 COPY --from=base /app/dist .
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=base /app/nginx.conf /etc/nginx/conf.d/default.conf
 ENTRYPOINT [\
   "/bin/bash", \
   "-c", \
