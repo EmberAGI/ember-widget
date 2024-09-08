@@ -29,7 +29,7 @@ _Note: You can setup and run the demo app from the root of the monorepo._
 
 3. Create a `.env` file in the root of the monorepo with the following:
    ```
-   VITE_EMBER_WIDGET_API_KEY={{YOUR_EMBER_WIDGET_API_KEY}}
+   VITE_EMBER_API_KEY={{YOUR_EMBER_API_KEY}}
    ```
 
 4. Build the ember-widget package and demo app:

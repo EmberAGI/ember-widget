@@ -42,7 +42,7 @@ where config is an object with the following properties:
 
 ```
 const config = {
-  secret: "process.env.YOUR_API_KEY",
+  secret: "process.env.YOUR_EMBER_API_KEY",
 };
 ```
 
@@ -59,7 +59,7 @@ import "ember-widget/dist/style.css";
 import { EmberChat } from "ember-widget";
 
 const config = {
-    secret: process.env.YOUR_EMBER_WIDGET_API_KEY,
+    secret: process.env.YOUR_EMBER_API_KEY,
 };
 
 const rootElement = document.getElementById('root');
