@@ -94,6 +94,8 @@ jobs:
 
       - name: Check Deployment Status
         if: steps.check_changesets.outputs.DEPLOY == 'true' && failure()
+        env:
+          ENVIRONMENT: production
         run: |
           echo "Deployment failed. Please check the logs for more information."
           docker compose -f apps/demo/docker-compose.yml -p ember-widget-demo-$ENVIRONMENT logs
