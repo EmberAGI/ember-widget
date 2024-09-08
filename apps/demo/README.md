@@ -1,50 +1,48 @@
-# React + TypeScript + Vite
+# Demo App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a demo application showcasing the Ember Widget using React and TypeScript.
 
-Currently, two official plugins are available:
+You can either build and run the demo app from this repo or visit https://demo.emberai.xyz to see it in action.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Purpose
 
-## Expanding the ESLint configuration
+The demo app is used to showcase the Ember Widget and provides a simple example of how to integrate it into your application.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Prerequisites
 
-- Configure the top-level `parserOptions` property like this:
+- Node.js (version 20 or higher)
+- pnpm (version 9 or higher)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Installation
+
+_Note: You can setup and run the demo app from the root of the monorepo._
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/EmberAGI/ember-widget.git
+   ```
+
+2. Install dependencies:
+   ```
+   pnpm install
+   ```
+
+3. Create a `.env` file in the root of the monorepo with the following:
+   ```
+   VITE_EMBER_WIDGET_API_KEY={{YOUR_EMBER_WIDGET_API_KEY}}
+   ```
+
+4. Build the ember-widget package and demo app:
+   ```
+   pnpm run build
+   ```
+
+## Usage
+
+To run the demo app locally:
+
+```
+pnpm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+This will start the development server and open your default browser to `http://localhost:5173`.
