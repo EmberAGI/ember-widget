@@ -6,7 +6,7 @@ import "ember-widget/dist/style.css";
 import { EmberChat } from "ember-widget";
 
 const config = {
-    secret: import.meta.env.VITE_EMBER_WIDGET_API_KEY,
+    secret: import.meta.env.VITE_EMBER_API_KEY,
   };
 
 const rootElement = document.getElementById('root');
