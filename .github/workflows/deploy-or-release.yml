@@ -1,4 +1,4 @@
-name: Deploy demo app to demo.emberai.xyz (Production)
+name: Deploy demo app or release ember-widget (Production)
 
 on:
   push:
@@ -12,8 +12,8 @@ jobs:
   ci:
     uses: ./.github/workflows/ci.yml
 
-  deploy:
-    name: Deploy
+  deploy-or-release:
+    name: Deploy or Release
     needs: ci
     runs-on: ubuntu-latest
     environment: production
@@ -35,11 +35,12 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Create Release Pull Request
+      - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Check for Changesets
         id: check_changesets
@@ -72,5 +73,4 @@ jobs:
       - name: Deployment Skipped
         if: steps.check_changesets.outputs.DEPLOY == 'false'
         run: |
-          echo "Deployment skipped because changesets were found."
-          echo "Please merge the version PR before running this workflow again."
+          echo "Deployment skipped for demo app."
