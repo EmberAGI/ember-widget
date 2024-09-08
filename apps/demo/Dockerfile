@@ -7,15 +7,11 @@ COPY package.json ./
 COPY ../../pnpm-lock.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm i --frozen-lockfile
 COPY . .
-RUN pwd
-RUN ls -la
 RUN pnpm run build
 
 FROM nginx:stable-alpine
 WORKDIR /usr/share/nginx/html
 RUN apk update && apk add --no-cache bash envsubst
-RUN pwd
-RUN ls -la
 COPY --from=base /app/dist .
 COPY --from=base /app/nginx.conf /etc/nginx/conf.d/default.conf
 ENTRYPOINT [\
