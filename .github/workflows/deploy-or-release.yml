@@ -87,7 +87,7 @@ jobs:
           VITE_EMBER_API_KEY: ${{ secrets.EMBER_API_KEY }}
           ENVIRONMENT: production
         run: |
-          docker compose -f compose.yaml -p ember-widget-demo-$ENVIRONMENT up -d --build --remove-orphans
+          docker compose -f docker-compose.yml -p ember-widget-demo-$ENVIRONMENT up -d --build --remove-orphans
 
       - name: Check Deployment Status
         if: steps.check_changesets.outputs.DEPLOY == 'true' && failure()
