@@ -1,32 +1,20 @@
-# Build stage
-FROM node:20-alpine as build
-
+FROM node:20-alpine as base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 WORKDIR /app
-
-# Install pnpm
-RUN npm install -g pnpm
-
-# Copy package.json and pnpm-lock.yaml
 COPY package.json pnpm-lock.yaml ./
-
-# Install dependencies
-RUN pnpm install --frozen-lockfile
-
-# Copy the rest of the application code
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm i --frozen-lockfile
 COPY . .
-
-# Build the application
 RUN pnpm run build
 
-# Production stage
-FROM nginx:alpine
-
-# Copy the built assets from the build stage
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Copy nginx configuration if you have a custom one
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+FROM nginx:stable-alpine
+WORKDIR /usr/share/nginx/html
+RUN apk update && apk add --no-cache bash envsubst
+COPY --from=base /app/dist .
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+ENTRYPOINT [\
+  "/bin/bash", \
+  "-c", \
+  "envsubst < env-config.template.json > env-config.json && nginx -g \"daemon off;\"" \
+]

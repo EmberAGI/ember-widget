@@ -1,12 +1,22 @@
-version: '3.8'
-
 services:
-  demo-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: your-registry/demo-app:${VERSION}
-    ports:
-      - "80:80"
-    environment:
-      - NODE_ENV=production
+  ember_widget_demo:
+    container_name: ember-widget-demo-${ENVIRONMENT}
+    restart: always
+    build: .
+    secrets:
+      - ember_api_key
+    logging:
+      options:
+        max-size: "1m"
+        max-file: "1"
+    networks:
+      - shared_network
+
+secrets:
+  ember_api_key:
+    environment: "VITE_EMBER_API_KEY"
+
+networks:
+  shared_network:
+    name: ember-main-${ENVIRONMENT}
+    external: true
