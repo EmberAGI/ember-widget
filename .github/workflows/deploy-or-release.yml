@@ -80,6 +80,9 @@ jobs:
         with:
           version: v2.21.0
 
+      - name: Change to demo app directory
+        run: cd apps/demo
+
       - name: Deploy containers in server
         if: steps.check_changesets.outputs.DEPLOY == 'true'
         env:
