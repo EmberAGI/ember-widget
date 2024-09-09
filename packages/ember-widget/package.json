@@ -1,7 +1,7 @@
 {
-  "name": "ember-widget",
+  "name": "@emberai/ember-widget",
   "private": false,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
@@ -26,9 +26,9 @@
   "dependencies": {
     "@types/uuid": "^10.0.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
-    "react": "^18.3.1",
+    "react": "18.2.0",
     "react-chat-elements": "^12.0.16",
-    "react-dom": "^18.3.1",
+    "react-dom": "18.2.0",
     "react-markdown": "^9.0.1",
     "uuid": "^10.0.0",
     "zod": "^3.23.8"
@@ -36,8 +36,8 @@
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@types/node": "^22.5.2",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.9.0",
@@ -50,5 +50,23 @@
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1",
     "vite-plugin-dts": "^4.1.0"
-  }
+  },
+  "description": "Your dApp, as easy as texting a friend.",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EmberAGI/ember-widget.git"
+  },
+  "keywords": [
+    "ai",
+    "crypto"
+  ],
+  "author": "Ember AI",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/EmberAGI/ember-widget/issues"
+  },
+  "homepage": "https://github.com/EmberAGI/ember-widget#readme"
 }
