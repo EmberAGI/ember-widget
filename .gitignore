@@ -8,7 +8,6 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
 dist-ssr
 *.local
 
@@ -25,3 +24,10 @@ dist-ssr
 
 # Environment files
 .env*
+dist/index.d.ts
+dist/index.es.js
+dist/index.es.js.map
+dist/index.umd.js
+dist/index.umd.js.map
+dist/style.css
+dist/vite.svg
