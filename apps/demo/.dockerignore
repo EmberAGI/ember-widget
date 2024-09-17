@@ -1,0 +1,11 @@
+.env
+env-config.json
+.vscode
+.github
+node_modules
+.mise.toml
+eslint.config.js
+prettier.config.js
+README.md
+.gitignore
+docker-compose.yaml

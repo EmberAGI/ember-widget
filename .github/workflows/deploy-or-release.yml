@@ -1,4 +1,4 @@
-name: Deploy demo app to demo.emberai.xyz (Production)
+name: Deploy demo app or release ember-widget (Production)
 
 on:
   push:
@@ -12,8 +12,8 @@ jobs:
   ci:
     uses: ./.github/workflows/ci.yml
 
-  deploy:
-    name: Deploy
+  deploy-or-release:
+    name: Deploy or Release
     needs: ci
     runs-on: ubuntu-latest
     environment: production
@@ -35,13 +35,14 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Create Release Pull Request
+      - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
-          cwd: ./apps/demo
+          publish: pnpm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Check for Changesets
         id: check_changesets
@@ -59,20 +60,50 @@ jobs:
         id: get_version
         run: echo "NEW_VERSION=$(node -p "require('./apps/demo/package.json').version")" >> $GITHUB_OUTPUT
 
-      - name: DOCKER STUFF...
+      - name: Set up SSH environment
         if: steps.check_changesets.outputs.DEPLOY == 'true'
         run: |
-          echo "DOCKER STUFF..."
+          mkdir -p ~/.ssh
+          echo ${{ secrets.SSH_KEY }} >> ~/.ssh/known_hosts
 
+      - name: Setup SSH private key
+        if: steps.check_changesets.outputs.DEPLOY == 'true'
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Set up Docker Buildx
+        if: steps.check_changesets.outputs.DEPLOY == 'true'
+        uses: docker/setup-buildx-action@v3
+
+      - name: Install Compose
+        if: steps.check_changesets.outputs.DEPLOY == 'true'
+        uses: ndeloof/install-compose-action@v0.0.1
+        with:
+          version: v2.21.0
+
+      - name: Deploy containers in server
+        if: steps.check_changesets.outputs.DEPLOY == 'true'
+        env:
+          DOCKER_HOST: ssh://${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}
+          VITE_EMBER_API_KEY: ${{ secrets.EMBER_API_KEY }}
+          ENVIRONMENT: production
+        run: |
+          set -e
+          echo "Starting deployment process..."
+          docker compose -f apps/demo/docker-compose.yml -p ember-widget-demo-$ENVIRONMENT up -d --build --remove-orphans
+          echo "Deployment process completed successfully."
 
       - name: Check Deployment Status
         if: steps.check_changesets.outputs.DEPLOY == 'true' && failure()
+        env:
+          ENVIRONMENT: production
         run: |
           echo "Deployment failed. Please check the logs for more information."
+          docker compose -f apps/demo/docker-compose.yml -p ember-widget-demo-$ENVIRONMENT logs
           exit 1
 
       - name: Deployment Skipped
         if: steps.check_changesets.outputs.DEPLOY == 'false'
         run: |
-          echo "Deployment skipped because changesets were found."
-          echo "Please merge the version PR before running this workflow again."
+          echo "Deployment skipped for demo app."
