@@ -9,7 +9,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, "./lib/index.ts"),
-      name: "react-beautiful-timeline",
+      name: "ember-widget",
       fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {

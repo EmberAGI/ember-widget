@@ -2,8 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import "ember-widget/dist/style.css";
-import { EmberChat } from "ember-widget";
+import "@emberai/ember-widget/dist/style.css";
+import { EmberChat } from "@emberai/ember-widget";
 
 const config = {
     secret: import.meta.env.VITE_EMBER_API_KEY,

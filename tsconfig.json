@@ -1,0 +1,8 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/ember-widget" },
+    { "path": "./apps/demo" }
+  ],
+  "exclude": ["node_modules"]
+}
