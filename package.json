@@ -1,14 +1,17 @@
 {
   "name": "ember-widget-monorepo",
   "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.9.0",
   "workspaces": [
     "packages/*",
     "apps/*"
   ],
   "scripts": {
-    "build": "pnpm run -r build",
+    "build": "node build.js",
     "test": "pnpm run -r test",
     "dev": "pnpm run --filter ./apps/demo dev",
+    "preview": "pnpm run --filter ./apps/demo preview",
     "changeset": "changeset",
     "version": "changeset version",
     "release": "pnpm build && changeset publish",
@@ -20,7 +23,9 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.8",
-    "typescript": "5.4.2",
-    "@types/node": "^22.5.2"
+    "@types/node": "^22.5.2",
+    "dotenv": "^16.4.5",
+    "execa": "^9.4.0",
+    "typescript": "5.4.2"
   }
 }

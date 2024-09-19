@@ -15,27 +15,32 @@ The demo app is used to showcase the Ember Widget and provides a simple example 
 
 ## Installation
 
-_Note: You can setup and run the demo app from the root of the monorepo._
+_Note: You can also setup and run the demo app from the root of the monorepo. Operating from root is required for local development._
 
 1. Clone the repository:
    ```
    git clone https://github.com/EmberAGI/ember-widget.git
    ```
 
-2. Install dependencies:
-   ```
-   pnpm install
-   ```
-
-3. Create a `.env` file in the root of the monorepo with the following:
+2. Create a `.env` file in this directory with the following:
    ```
    VITE_EMBER_API_KEY={{YOUR_EMBER_API_KEY}}
+   USE_PUBLISHED_PACKAGES=false
+   ```
+
+   `USE_PUBLISHED_PACKAGES` is set to `false` for local packages to be used during development. Set to `true` to use the published packages.
+
+3. Install dependencies:
+   ```
+   pnpm install
    ```
 
 4. Build the ember-widget package and demo app:
    ```
    pnpm run build
    ```
+
+   _Note: When `USE_PUBLISHED_PACKAGES=true`, the local packages will not be built._
 
 ## Usage
 
