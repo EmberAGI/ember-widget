@@ -12,6 +12,19 @@ const envPath = path.resolve(__dirname, 'apps/demo/.env');
 // Load environment variables from the specified .env file
 dotenv.config({ path: envPath });
 
+// Parse command-line arguments
+const args = process.argv.slice(2);
+const usePublishedPackagesIndex = args.findIndex(arg => arg.startsWith('--use-published-packages'));
+
+// Prioritize command-line argument over .env file
+let usePublishedPackages;
+if (usePublishedPackagesIndex !== -1) {
+  const value = args[usePublishedPackagesIndex].split('=')[1];
+  usePublishedPackages = value ? value.toLowerCase() === 'true' : true;
+} else {
+  usePublishedPackages = process.env.USE_PUBLISHED_PACKAGES === 'true';
+}
+
 // Function to run a command
 const run = async (cmd, args) => {
   try {
@@ -24,7 +37,7 @@ const run = async (cmd, args) => {
 
 // Main build function
 const build = async () => {
-  if (process.env.USE_PUBLISHED_PACKAGES !== 'true') {
+  if (!usePublishedPackages) {
     console.log('Building ember-widget...');
     await run('pnpm', ['run', '--filter', './packages/ember-widget', 'build']);
   } else {

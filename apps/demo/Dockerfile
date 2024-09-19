@@ -8,8 +8,7 @@ COPY ../../pnpm-lock.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm i --frozen-lockfile
 COPY . .
 ARG USE_PUBLISHED_PACKAGES
-ENV USE_PUBLISHED_PACKAGES=${USE_PUBLISHED_PACKAGES}
-RUN pnpm run build
+RUN pnpm run build --use-published-packages=${USE_PUBLISHED_PACKAGES}
 
 FROM nginx:stable-alpine
 WORKDIR /usr/share/nginx/html
