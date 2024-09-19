@@ -13,7 +13,7 @@ RUN pnpm run build
 FROM nginx:stable-alpine
 WORKDIR /usr/share/nginx/html
 RUN apk update && apk add --no-cache bash envsubst
-COPY --from=base /app/dist .
+COPY --from=base /app/apps/demo/dist .
 COPY --from=base /app/nginx.conf /etc/nginx/conf.d/default.conf
 ENTRYPOINT [\
   "/bin/bash", \
