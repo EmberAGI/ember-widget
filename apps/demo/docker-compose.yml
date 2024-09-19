@@ -4,9 +4,9 @@ services:
     restart: always
     build:
       context: ../..
+      args:
+        USE_PUBLISHED_PACKAGES: ${USE_PUBLISHED_PACKAGES}
       dockerfile: apps/demo/Dockerfile
-    environment:
-      - USE_PUBLISHED_PACKAGES=${USE_PUBLISHED_PACKAGES}
     secrets:
       - ember_api_key
     logging:
