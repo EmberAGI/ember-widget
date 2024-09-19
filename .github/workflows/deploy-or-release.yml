@@ -87,7 +87,7 @@ jobs:
         env:
           USE_PUBLISHED_PACKAGES: ${{ env.USE_PUBLISHED_PACKAGES }}
           DOCKER_HOST: ssh://${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}
-          VITE_EMBER_API_KEY: ${{ secrets.EMBER_API_KEY }}
+          VITE_EMBER_API_KEY: ${{ secrets.VITE_EMBER_API_KEY }}
           ENVIRONMENT: production
         run: |
           set -e
