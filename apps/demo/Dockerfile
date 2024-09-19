@@ -7,6 +7,7 @@ COPY package.json ./
 COPY ../../pnpm-lock.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm i --frozen-lockfile
 COPY . .
+ENV USE_PUBLISHED_PACKAGES=${USE_PUBLISHED_PACKAGES}
 RUN pnpm run build
 
 FROM nginx:stable-alpine
