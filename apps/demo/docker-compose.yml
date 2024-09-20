@@ -7,18 +7,14 @@ services:
       args:
         USE_PUBLISHED_PACKAGES: ${USE_PUBLISHED_PACKAGES}
       dockerfile: apps/demo/Dockerfile
-    secrets:
-      - ember_api_key
+    environment:
+      VITE_EMBER_API_KEY: ${VITE_EMBER_API_KEY}
     logging:
       options:
         max-size: "1m"
         max-file: "1"
     networks:
       - shared_network
-
-secrets:
-  ember_api_key:
-    environment: "VITE_EMBER_API_KEY"
 
 networks:
   shared_network:
