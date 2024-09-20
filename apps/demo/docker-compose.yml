@@ -6,9 +6,8 @@ services:
       context: ../..
       args:
         USE_PUBLISHED_PACKAGES: ${USE_PUBLISHED_PACKAGES}
+        VITE_EMBER_API_KEY: ${VITE_EMBER_API_KEY}
       dockerfile: apps/demo/Dockerfile
-    environment:
-      VITE_EMBER_API_KEY: ${VITE_EMBER_API_KEY}
     logging:
       options:
         max-size: "1m"
