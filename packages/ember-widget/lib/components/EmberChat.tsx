@@ -24,6 +24,7 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
     type: "text",
     title: "Ember",
     text: "Hi, I am Ember. I can help you with your crypto transactions. Click on the buttons below to perform an action or type a message in the text box below!",
+    avatar: EmberSvg,
   } as MessageType;
 
   const welcomeBackMessage = {
@@ -31,6 +32,7 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
     type: "text",
     title: "Ember",
     text: "Welcome back! I am Ember. I can help you with your crypto transactions. Click on the buttons below to perform an action or type a message in the text box below!",
+    avatar: EmberSvg,
   } as MessageType;
 
   const [isOpen, setIsOpen] = useState(false);
@@ -132,6 +134,7 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
             type: "text",
             title: "Ember",
             text: response.message,
+            avatar: EmberSvg,
           } as unknown as MessageType,
         ]);
         localStorage.setItem("emberMessages", JSON.stringify(textMessages));
@@ -165,7 +168,6 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
       {
         position: "right",
         type: "text",
-        title: "You",
         text: inputText,
       } as MessageType,
     ]);
@@ -175,7 +177,6 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
       {
         position: "right",
         type: "text",
-        title: "You",
         text: inputText,
       } as MessageType,
     ]);
@@ -192,7 +193,7 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
   } else {
     return (
       <div className="emberChat">
-        <div className="emberChat__header flex justify-between w-full">
+        <div className="emberChat__header flex justify-between w-full bg-orange-500 px-4 py-2 rounded-t-2xl">
           <h6 className="flex gap-2">
             <img
               src={EmberSvg}
@@ -204,12 +205,19 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
           <button
             onClick={() => setIsOpen(false)}
             type="button"
-            className="bg-transparent text-orange-500 border border-orange-500 hover:bg-yellow-300 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-orange-500 dark:text-orange-500 dark:hover:text-white dark:focus:ring-yellow-300 dark:hover:bg-orange-500"
+            className="bg-transparent text-white border-none hover:bg-yellow-300 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-full text-sm p-1 text-center inline-flex items-center dark:text-white dark:hover:text-white dark:focus:ring-yellow-300 dark:hover:bg-orange-500"
           >
-            <svg fill="none" viewBox="0 0 24 24" height="1em" width="1em">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-chevron-down"
+              viewBox="0 0 16 16"
+            >
               <path
-                fill="currentColor"
-                d="M6.225 4.811a1 1 0 00-1.414 1.414L10.586 12 4.81 17.775a1 1 0 101.414 1.414L12 13.414l5.775 5.775a1 1 0 001.414-1.414L13.414 12l5.775-5.775a1 1 0 00-1.414-1.414L12 10.586 6.225 4.81z"
+                fill-rule="evenodd"
+                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
               />
             </svg>
             <span className="sr-only">Icon description</span>
@@ -227,7 +235,7 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
           dataSource={messages}
         ></MessageList>
         <div className="status_box text-xs text-slate-500">{emberStatus}</div>
-        <div className="emberChat__input">
+        <div className="emberChat__input px-2 pb-2">
           <Input
             referance={inputRef}
             onChange={(e: { target: { value: string } }) =>
