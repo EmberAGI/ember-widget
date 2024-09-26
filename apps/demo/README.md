@@ -2,7 +2,7 @@
 
 This is a demo application showcasing the Ember Widget using React and TypeScript.
 
-You can either build and run the demo app from this repo or visit https://demo.emberai.xyz to see it in action.
+You can build and run the demo app from this repo to see it in action.
 
 ## Purpose
 

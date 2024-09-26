@@ -4,6 +4,8 @@ Your dApp, as easy as texting a friend.
 
 The Ember Widget is a simple to integrate chat widget that allows your users to use your dApp through a conversation with Ember, an AI assistant that takes actions.
 
+![simple code snippet](https://cdn.prod.website-files.com/665df398da20e7e4232eeb7f/66e9cca4eca92d58e2164008_Snap%201.png)
+
 ## Features
 
 - AI-powered chat interface for dApp interactions
