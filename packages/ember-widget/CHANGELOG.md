@@ -1,5 +1,14 @@
 # ember-widget
 
+## 0.2.0
+
+### Minor Changes
+
+- 657a4bd: UI improvements
+  - Color updates
+  - Style adjustments
+  - Added suggestion buttons to the chat
+
 ## 0.1.1
 
 ### Patch Changes
