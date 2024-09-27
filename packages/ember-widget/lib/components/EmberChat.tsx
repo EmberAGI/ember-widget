@@ -182,6 +182,29 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
     ]);
   };
 
+  const handleSuggestion = async (text: string) => {
+    setLoading(true);
+    setInputText(text);
+    setMessages([
+      ...messages,
+
+      {
+        position: "right",
+        type: "text",
+        text: text,
+      } as MessageType,
+    ]);
+
+    setTextMessages([
+      ...textMessages,
+      {
+        position: "right",
+        type: "text",
+        text: text,
+      } as MessageType,
+    ]);
+  };
+
   const inputRef = useRef<HTMLTextAreaElement | null>();
 
   if (!isOpen) {
@@ -235,26 +258,44 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
           dataSource={messages}
         ></MessageList>
         <div className="status_box text-xs text-slate-500">{emberStatus}</div>
-        <div className="emberChat__input px-2 pb-2">
-          <Input
-            referance={inputRef}
-            onChange={(e: { target: { value: string } }) =>
-              setInputText(e.target.value)
-            }
-            className="flex-grow"
-            placeholder="Type here..."
-            multiline={true}
-            maxHeight={200}
-            value={inputText}
-            rightButtons={[
-              <Button text={"Send"} onClick={handleSend} title="Send" />,
-            ]}
-            onKeyUp={(e: { key: string }) => {
-              if (e.key === "Enter") {
-                handleSend();
+        <div className="input-container flex flex-col w-full">
+          <div className="suggestions flex px-2 pb-2 gap-2">
+            <Button
+              text={"Swap Token"}
+              onClick={() => handleSuggestion("Swap token")}
+              title="Swap Token"
+              backgroundColor="#ffceb2"
+              className="border-orange-500 text-black hover:bg-orange-500 hover:text-white"
+            />
+            <Button
+              text={"Send Token"}
+              onClick={() => handleSuggestion("Send token")}
+              title="Send Token"
+              backgroundColor="#ffceb2"
+              className="border-orange-500 text-black hover:bg-orange-500 hover:text-white"
+            />
+          </div>
+          <div className="emberChat__input px-2 pb-2">
+            <Input
+              referance={inputRef}
+              onChange={(e: { target: { value: string } }) =>
+                setInputText(e.target.value)
               }
-            }}
-          />
+              className="flex-grow"
+              placeholder="Type here..."
+              multiline={true}
+              maxHeight={200}
+              value={inputText}
+              rightButtons={[
+                <Button text={"Send"} onClick={handleSend} title="Send" />,
+              ]}
+              onKeyUp={(e: { key: string }) => {
+                if (e.key === "Enter") {
+                  handleSend();
+                }
+              }}
+            />
+          </div>
         </div>
       </div>
     );

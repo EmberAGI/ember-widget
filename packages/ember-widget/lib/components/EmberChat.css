@@ -1,7 +1,8 @@
 .emberChat {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  bottom: 1rem;
+  right: 1rem;
+  margin-left: 1rem;
   z-index: 9999;
   display: flex;
   flex-direction: column;
@@ -84,6 +85,19 @@ button.rce-button {
   border: none;
   border-radius: 8px;
   padding: 0.5em 1em;
+}
+
+.suggestions button.rce-button {
+  background-color: #ffceb2 !important;
+  border: 2px solid #ff7224 !important ;
+  transition: background-color 0.3s;
+  color: black !important;
+}
+
+.suggestions button.rce-button:hover {
+  background-color: #ff7224 !important;
+  border: 2px solid #ff7224 !important ;
+  color: white !important;
 }
 
 .rce-input-buttons {
