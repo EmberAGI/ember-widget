@@ -252,29 +252,29 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
               el.scrollTop = el.scrollHeight;
             }
           }}
-          className="message-list max-w-lg max-h-64"
+          className="message-list max-w-lg max-h-64 pb-0"
           lockable={true}
           toBottomHeight={"100%"}
           dataSource={messages}
         ></MessageList>
-        <div className="status_box text-xs text-slate-500">{emberStatus}</div>
+        <div className="status_box text-xs text-slate-500 pt-0" >{emberStatus}</div>
+        <div className="suggestions flex px-2 pb-0 gap-3">
+          <Button
+            text={"Swap token"}
+            onClick={() => handleSuggestion("Swap token")}
+            title="Swap token"
+            backgroundColor="#ffceb2"
+            className="border-orange-500 text-black hover:bg-orange-500 hover:text-white"
+          />
+          <Button
+            text={"Send token"}
+            onClick={() => handleSuggestion("Send token")}
+            title="Send token"
+            backgroundColor="#ffceb2"
+            className="border-orange-500 text-black hover:bg-orange-500 hover:text-white"
+          />
+        </div>
         <div className="input-container flex flex-col w-full">
-          <div className="suggestions flex px-2 pb-2 gap-2">
-            <Button
-              text={"Swap Token"}
-              onClick={() => handleSuggestion("Swap token")}
-              title="Swap Token"
-              backgroundColor="#ffceb2"
-              className="border-orange-500 text-black hover:bg-orange-500 hover:text-white"
-            />
-            <Button
-              text={"Send Token"}
-              onClick={() => handleSuggestion("Send token")}
-              title="Send Token"
-              backgroundColor="#ffceb2"
-              className="border-orange-500 text-black hover:bg-orange-500 hover:text-white"
-            />
-          </div>
           <div className="emberChat__input px-2 pb-2">
             <Input
               referance={inputRef}
@@ -287,7 +287,12 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
               maxHeight={200}
               value={inputText}
               rightButtons={[
-                <Button text={"Send"} onClick={handleSend} title="Send" />,
+                <Button
+                  text={"Send"}
+                  onClick={handleSend}
+                  title="Send"
+                  className="send-button"
+                />,
               ]}
               onKeyUp={(e: { key: string }) => {
                 if (e.key === "Enter") {
