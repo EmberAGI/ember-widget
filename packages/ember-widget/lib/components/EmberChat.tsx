@@ -223,7 +223,7 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
               alt="Ember"
               className="w-6 h-6 ember-icon bg-orange-500 p-1 rounded-full"
             />
-            <span className="font-bold">Ember</span>
+            <span className="font-bold text-white">Ember</span>
           </h6>
           <button
             onClick={() => setIsOpen(false)}

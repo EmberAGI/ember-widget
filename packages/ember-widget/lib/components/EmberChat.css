@@ -57,6 +57,12 @@
   background-color: #ff7224;
   border-radius: 50%;
   padding: 0.2em;
+  color: #ff7224;
+}
+
+.rce-mbox-title {
+  color: #ff7224;
+  font-weight: semibold;
 }
 
 .rce-mbox {
