@@ -1,6 +1,7 @@
 ---
 "@emberai/ember-widget": minor
 ---
-
-- UI improvements
-- Added suggestions to the chat
+UI improvements
+- Color updates
+- Style adjustments
+- Added suggestion buttons to the chat
