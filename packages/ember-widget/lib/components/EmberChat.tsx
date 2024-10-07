@@ -69,9 +69,11 @@ export const EmberChat = ({ config }: { config: IEmberConfig }) => {
 
   useEffect(() => {
     const markdownMessages = textMessages.map((msg) => {
+      let text = msg.text?.replace(/\n\n/gi, "\n&nbsp;\n") ?? "";
+      text = text.replace(/\n/gi, "  \n");
       return {
         ...msg,
-        text: <Markdown>{msg.text}</Markdown>,
+        text: <Markdown>{text}</Markdown>,
       };
     });
 
